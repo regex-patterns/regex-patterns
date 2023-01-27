@@ -1,27 +1,29 @@
 import re
 
 _re_date = (
-    r"(?i)(?:[0-3]?\d(?:st|nd|rd|th)?\s+(?:of\s+)?(?:jan\.?|january|feb\.?|february|"
-    r"mar\.?|march|apr\.?|april|may|jun\.?|june|jul\.?|july|aug\.?|august|sep\.?|"
-    r"september|oct\.?|october|nov\.?|november|dec\.?|december)|(?:jan\.?|january|"
-    r"feb\.?|february|mar\.?|march|apr\.?|april|may|jun\.?|june|jul\.?|july|aug\.?|"
-    r"august|sep\.?|september|oct\.?|october|nov\.?|november|dec\.?|december)\s+[0-3]?"
-    r"\d(?:st|nd|rd|th)?)(?:\,)?\s*(?:\d{4})?|[0-3]?\d[-\./][0-3]?\d[-\./]\d{2,4}"
+    r"(?:\b|\s)(?:(?:[0-3]?\d(?:st|nd|rd|th)?\s+(?:of\s+)?(?:jan\.?|january|feb\.?"
+    r"|february|mar\.?|march|apr\.?|april|may|jun\.?|june|jul\.?|july|aug\.?|"
+    r"august|sep\.?|september|oct\.?|october|nov\.?|november|dec\.?|december)|"
+    r"(?:jan\.?|january|feb\.?|february|mar\.?|march|apr\.?|april|may|jun\.?|june|"
+    r"jul\.?|july|aug\.?|august|sep\.?|september|oct\.?|october|nov\.?|november|"
+    r"dec\.?|december)\s+[0-3]?\d(?:st|nd|rd|th)?)(?:\,)?\s*(?:\d{4})?|"
+    r"[0-3]?\d[-\./][0-3]?\d[-\./]\d{2,4})(?:\.|\b|\s)"
 )
-_re_time = r"(?i)\d{1,2}:\d{2} ?(?:[ap]\.?m\.?)?|\d[ap]\.?m\.?"
+_re_time = r"(?:\b|\s)(?:\d{1,2}:\d{2} ?(?:[ap]\.?m\.?)?|\d[ap]\.?m\.?)(?:\.|\b|\s)"
+
 _re_phone = (
-    r"((?:(?<![\d-])(?:\+?\d{1,3}[-.\s*]?)?(?:\(?\d{3}\)?[-.\s*]?)?\d{3}[-.\s*]?"
-    r"\d{4}(?![\d-]))|(?:(?<![\d-])(?:(?:\(\+?\d{2}\))|(?:\+?\d{2}))\s*\d{2}\s*"
-    r"\d{3}\s*\d{4}(?![\d-])))"
+    r"(?:\+|\(|\b|\s)(?:(?<![\d-])(?:\+?\d{1,3}[-.\s*]?)?(?:\(?\d{3}\)?"
+    r"[-.\s*]?)?\d{3}[-.\s*]?\d{4}(?![\d-]))|(?:(?<![\d-])(?:(?:\(\+?\d{2}\))|"
+    r"(?:\+?\d{2}))\s*\d{2}\s*\d{3}\s*\d{4}(?![\d-]))(?:\.|\b|\s)"
 )
 _re_phones_with_exts = (
-    r"(?i)(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*(?:[2-9]1[02-9]|[2-9][02-8]1|"
+    r"(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*(?:[2-9]1[02-9]|[2-9][02-8]1|"
     r"[2-9][02-8][02-9])\s*\)|(?:[2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))"
     r"\s*(?:[.-]\s*)?)?(?:[2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})"
     r"\s*(?:[.-]\s*)?(?:[0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(?:\d+)?)"
 )
 _re_link = (
-    r"(?i)((?:https?://|www\d{0,3}[.])?[a-z0-9.\-]+[.](?:(?:international)|"
+    r"((?:https?://|www\d{0,3}[.])?[a-z0-9.\-]+[.](?:(?:international)|"
     r"(?:construction)|(?:contractors)|(?:enterprises)|(?:photography)|(?:immobilien)|"
     r"(?:management)|(?:technology)|(?:directory)|(?:education)|(?:equipment)|"
     r"(?:institute)|(?:marketing)|(?:solutions)|(?:builders)|(?:clothing)|"
@@ -64,7 +66,7 @@ _re_link = (
     r"(?:/[^\s()<>]+[^\s`!()\[\]{};:'\".,<>?\xab\xbb\u201c\u201d\u2018\u2019])?)"
 )
 _re_email = (
-    r"(?i)([A-Za-z0-9!#$%&'*+\/=?^_{|.}~-]+@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+"
+    r"([A-Za-z0-9!#$%&'*+\/=?^_{|.}~-]+@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+"
     r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"
 )
 _re_ipv4 = (
@@ -83,8 +85,8 @@ _re_not_known_ports = (
     r"6[0-5]{2}[0-3][0-5]|[1-5][\d]{4}|[2-9][\d]{3}|1[1-9][\d]{2}|10[3-9][\d]|102[4-9]"
 )
 _re_price = r"[$]\s?[+-]?[0-9]{1,3}(?:(?:,?[0-9]{3}))*(?:\.[0-9]{1,2})?"
-_re_hex_color = "(#(?:[0-9a-fA-F]{8})|#(?:[0-9a-fA-F]{3}){1,2})\\b"
-_re_credit_card = "((?:(?:\\d{4}[- ]?){3}\\d{4}|\\d{15,16}))(?![\\d])"
+_re_hex_color = "(#(?:[0-9a-fA-F]{8})|#(?:[0-9a-fA-F]{3}){1,2})"
+_re_credit_card = r"((?:(?:\d{4}[- ]?){3}\d{4}|\d{15,16}))(?![\d])"
 _re_visa_card = r"4\d{3}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}"
 _re_master_card = r"5[1-5]\d{2}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}"
 _re_btc_address = (
@@ -92,10 +94,10 @@ _re_btc_address = (
 )
 _re_street_address = (
     r"\d{1,4} [\w\s]{1,20}(?:street|st|avenue|ave|road|rd|highway|hwy|square|sq|trail|"
-    r"trl|drive|dr|court|ct|park|parkway|pkwy|circle|cir|boulevard|blvd)\W?(?=\s|$)"
+    r"trl|drive|dr|court|ct|park|parkway|pkwy|circle|cir|boulevard|blvd)\W?"
 )
-_re_zip_code = r"\b\d{5}(?:[-\s]\d{4})?\b"
-_re_po_box = r"(?i)P\.? ?O\.? Box \d+"
+_re_zip_code = r"\d{5}(?:[-\s]\d{4})?"
+_re_po_box = r"P\.? ?O\.? Box \d+"
 _re_ssn = r"(?:\d{3}-\d{2}-\d{4})"
 _re_md5_hashes = r"[0-9a-fA-F]{32}"
 _re_sha1_hashes = r"[0-9a-fA-F]{40}"
@@ -104,289 +106,257 @@ _re_isbn13 = r"(?:[\d]-?){12}[\dxX]"
 _re_isbn10 = r"(?:[\d]-?){9}[\dxX]"
 _re_mac_address = r"(([0-9a-fA-F]{2}[:-]){5}([0-9a-fA-F]{2}))"
 _re_iban_by_country = (
-    r"AL[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{4}[\s-]?){4}",
-    r"AD[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{4}[\s-]?){3}",
-    r"AT[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
-    r"AZ[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
-    r"BH[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){3}"
-    r"(?:[a-zA-Z0-9]{2})",
-    r"BY[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
-    r"BE[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}",
-    r"BA[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
-    r"BR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{3})(?:[a-zA-Z]{1}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{1})",
-    r"BG[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){1}(?:[0-9]{2})"
-    r"(?:[a-zA-Z0-9]{2}[\s-]?)(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[a-zA-Z0-9]{2})",
-    r"CR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
-    r"HR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{1})",
-    r"CY[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{4}[\s-]?){4}",
-    r"CZ[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
-    r"DK[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
-    r"DO[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
-    r"TL[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})",
-    r"EE[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
-    r"FO[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
-    r"FI[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
-    r"FR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})(?:[a-zA-Z0-9]{2}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{1})(?:[0-9]{2})",
-    r"GE[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{2})(?:[0-9]{2}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
+    r"AL[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-z0-9]{4}[\s-]?){4}",
+    r"AD[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-z0-9]{4}[\s-]?){3}",
+    r"AT[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
+    r"AZ[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
+    r"BH[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{2})",
+    r"BY[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
+    r"BE[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}",
+    r"BA[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
+    r"BR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{3})(?:[a-z]{1}[\s-]?)"
+    r"(?:[a-z0-9]{1})",
+    r"BG[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){1}(?:[0-9]{2})"
+    r"(?:[a-z0-9]{2}[\s-]?)(?:[a-z0-9]{4}[\s-]?){1}(?:[a-z0-9]{2})",
+    r"CR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
+    r"HR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{1})",
+    r"CY[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[a-z0-9]{4}[\s-]?){4}",
+    r"CZ[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
+    r"DK[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"DO[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}",
+    r"TL[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})",
+    r"EE[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
+    r"FO[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"FI[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"FR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})(?:[a-z0-9]{2}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{1})(?:[0-9]{2})",
+    r"GE[a-z0-9]{2}[\s-]?(?:[a-z0-9]{2})(?:[0-9]{2}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
     r"(?:[0-9]{2})",
-    r"DE[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
-    r"GI[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){3}"
-    r"(?:[a-zA-Z0-9]{3})",
-    r"GR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{3})(?:[a-zA-Z0-9]{1}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){3}(?:[a-zA-Z0-9]{3})",
-    r"GL[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
-    r"GT[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){5}",
-    r"HU[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){6}",
-    r"IS[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{2})",
-    r"IE[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){3}"
-    r"(?:[0-9]{2})",
-    r"IL[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})",
-    r"IT[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{1})(?:[0-9]{3}[\s-]?)(?:[0-9]{4}"
-    r"[\s-]?){1}(?:[0-9]{3})"
-    r"(?:[a-zA-Z0-9]{1}[\s-]?)(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{3})",
-    r"JO[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}(?:[0-9]{2})",
-    r"KZ[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{1})(?:[a-zA-Z0-9]{3}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{2})",
-    r"XK[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})"
+    r"DE[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
+    r"GI[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{3})",
+    r"GR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{3})(?:[a-z0-9]{1}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{3})",
+    r"GL[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"GT[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){5}",
+    r"HU[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){6}",
+    r"IS[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{2})",
+    r"IE[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"IL[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})",
+    r"IT[a-z0-9]{2}[\s-]?(?:[a-z]{1})(?:[0-9]{3}[\s-]?)(?:[0-9]{4}[\s-]?){1}"
+    r"(?:[0-9]{3})(?:[a-z0-9]{1}[\s-]?)(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{3})",
+    r"JO[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}(?:[0-9]{2})",
+    r"KZ[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{1})(?:[a-z0-9]{3}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{2})",
+    r"XK[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})"
     r"(?:[0-9]{2}[\s-]?)",
-    r"KW[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){5}"
-    r"(?:[a-zA-Z0-9]{2})",
-    r"LV[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){3}"
-    r"(?:[a-zA-Z0-9]{1})",
-    r"LB[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){5}",
-    r"LI[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-zA-Z0-9]{3}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{1})",
-    r"LT[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
-    r"LU[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{3})(?:[a-zA-Z0-9]{1}[\s-]?)(?:[a-zA-Z0-9]{4}"
-    r"[\s-]?){3}",
-    r"MK[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{3})(?:[a-zA-Z0-9]{1}[\s-]?)(?:[a-zA-Z0-9]{4}"
-    r"[\s-]?){2}(?:[a-zA-Z0-9]{1})(?:[0-9]{2})",
-    r"MT[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})"
-    r"(?:[a-zA-Z0-9]{3}[\s-]?)(?:[a-zA-Z0-9]{4}[\s-]?){3}(?:[a-zA-Z0-9]{3})",
-    r"MR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{3})",
-    r"MU[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})"
-    r"(?:[a-zA-Z]{1}[\s-]?)(?:[a-zA-Z]{2})",
-    r"MC[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})(?:[a-zA-Z0-9]{2}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{1})(?:[0-9]{2})",
-    r"MD[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{2})(?:[a-zA-Z0-9]{2}[\s-]?)(?:[a-zA-Z0-9]{4}"
+    r"KW[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){5}(?:[a-z0-9]{2})",
+    r"LV[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{1})",
+    r"LB[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){5}",
+    r"LI[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-z0-9]{3}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{1})",
+    r"LT[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}",
+    r"LU[a-z0-9]{2}[\s-]?(?:[0-9]{3})(?:[a-z0-9]{1}[\s-]?)(?:[a-z0-9]{4}[\s-]?){3}",
+    r"MK[a-z0-9]{2}[\s-]?(?:[0-9]{3})(?:[a-z0-9]{1}[\s-]?)(?:[a-z0-9]{4}"
+    r"[\s-]?){2}(?:[a-z0-9]{1})(?:[0-9]{2})",
+    r"MT[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})"
+    r"(?:[a-z0-9]{3}[\s-]?)(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{3})",
+    r"MR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{3})",
+    r"MU[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}(?:[0-9]{3})"
+    r"(?:[a-z]{1}[\s-]?)(?:[a-z]{2})",
+    r"MC[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})(?:[a-z0-9]{2}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{1})(?:[0-9]{2})",
+    r"MD[a-z0-9]{2}[\s-]?(?:[a-z0-9]{2})(?:[a-z0-9]{2}[\s-]?)(?:[a-z0-9]{4}"
     r"[\s-]?){4}",
-    r"ME[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
-    r"NL[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})",
-    r"NO[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{3})",
-    r"PK[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
-    r"PS[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}"
-    r"(?:[0-9]{1})",
-    r"PL[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){6}",
-    r"PT[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{1})",
-    r"QA[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){5}"
-    r"(?:[a-zA-Z0-9]{1})",
-    r"RO[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[a-zA-Z0-9]{4}[\s-]?){4}",
-    r"SM[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{1})(?:[0-9]{3}[\s-]?)(?:[0-9]{4}[\s-]?){1}"
-    r"(?:[0-9]{3})(?:[a-zA-Z0-9]{1}[\s-]?)(?:[a-zA-Z0-9]{4}[\s-]?){2}"
-    r"(?:[a-zA-Z0-9]{3})",
-    r"SA[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{2})(?:[a-zA-Z0-9]{2}[\s-]?)(?:[a-zA-Z0-9]{4}"
-    r"[\s-]?){4}",
-    r"RS[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
-    r"SK[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
-    r"SI[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{3})",
-    r"ES[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
-    r"SE[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
-    r"CH[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-zA-Z0-9]{3}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){2}(?:[a-zA-Z0-9]{1})",
-    r"TN[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
-    r"TR[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-zA-Z0-9]{3}[\s-]?)"
-    r"(?:[a-zA-Z0-9]{4}[\s-]?){3}(?:[a-zA-Z0-9]{2})",
-    r"AE[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{3})(?:[0-9]{1}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
+    r"ME[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
+    r"NL[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){2}(?:[0-9]{2})",
+    r"NO[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){2}(?:[0-9]{3})",
+    r"PK[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
+    r"PS[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){5}(?:[0-9]{1})",
+    r"PL[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){6}",
+    r"PT[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}(?:[0-9]{1})",
+    r"QA[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){5}(?:[a-z0-9]{1})",
+    r"RO[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[a-z0-9]{4}[\s-]?){4}",
+    r"SM[a-z0-9]{2}[\s-]?(?:[a-z]{1})(?:[0-9]{3}[\s-]?)(?:[0-9]{4}[\s-]?){1}"
+    r"(?:[0-9]{3})(?:[a-z0-9]{1}[\s-]?)(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{3})",
+    r"SA[a-z0-9]{2}[\s-]?(?:[0-9]{2})(?:[a-z0-9]{2}[\s-]?)(?:[a-z0-9]{4}[\s-]?){4}",
+    r"RS[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){4}(?:[0-9]{2})",
+    r"SK[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
+    r"SI[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){3}(?:[0-9]{3})",
+    r"ES[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
+    r"SE[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
+    r"CH[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-z0-9]{3}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){2}(?:[a-z0-9]{1})",
+    r"TN[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){5}",
+    r"TR[a-z0-9]{2}[\s-]?(?:[0-9]{4}[\s-]?){1}(?:[0-9]{1})(?:[a-z0-9]{3}[\s-]?)"
+    r"(?:[a-z0-9]{4}[\s-]?){3}(?:[a-z0-9]{2})",
+    r"AE[a-z0-9]{2}[\s-]?(?:[0-9]{3})(?:[0-9]{1}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
     r"(?:[0-9]{3})",
-    r"GB[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
-    r"VA[a-zA-Z0-9]{2}[\s-]?(?:[0-9]{3})(?:[0-9]{1}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
+    r"GB[a-z0-9]{2}[\s-]?(?:[a-z]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){3}(?:[0-9]{2})",
+    r"VA[a-z0-9]{2}[\s-]?(?:[0-9]{3})(?:[0-9]{1}[\s-]?)(?:[0-9]{4}[\s-]?){3}"
     r"(?:[0-9]{2})",
-    r"VG[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
+    r"VG[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
 )
 _re_iban_number = "|".join(f"(?:{pattern})" for pattern in _re_iban_by_country)
-_re_bic_code = r"(?:[a-zA-Z]{4})(?:[a-zA-Z]{2})(?:[a-zA-Z0-9]{2})(?:[a-zA-Z0-9]{3})?"
+_re_bic_code = r"(?:[a-z]{4})(?:[a-z]{2})(?:[a-z0-9]{2})(?:[a-z0-9]{3})?"
 _re_git_repo = (
     r"((git|ssh|http(s)?)|(git@[\w\.]+))(:(\/\/)?)([\w\.@\:/\-~]+)(\.git)(\/)?"
 )
 
 
-_regex_map = {
-    "dates": re.compile(_re_date),
-    "times": re.compile(_re_time),
-    "phones": re.compile(_re_phone),
-    "phones_with_exts": re.compile(_re_phones_with_exts),
-    "emails": re.compile(_re_email),
-    "links": re.compile(_re_link),
-    "ipv4": re.compile(_re_ipv4),
-    "ipv6": re.compile(_re_ipv6),
-    "ips": re.compile(_re_ip_pattern),
-    "not_known_ports": re.compile(_re_not_known_ports),
-    "prices": re.compile(_re_price),
-    "hex_colors": re.compile(_re_hex_color),
-    "credit_cards": re.compile(_re_credit_card),
-    "visa_cards": re.compile(_re_visa_card),
-    "master_cards": re.compile(_re_master_card),
-    "btc_addresses": re.compile(_re_btc_address),
-    "street_addresses": re.compile(_re_street_address),
-    "zip_codes": re.compile(_re_zip_code),
-    "po_boxes": re.compile(_re_po_box),
-    "ssn_number": re.compile(_re_ssn),
-    "md5_hashes": re.compile(_re_md5_hashes),
-    "sha1_hashes": re.compile(_re_sha1_hashes),
-    "sha256_hashes": re.compile(_re_sha256_hashes),
-    "isbn13": re.compile(_re_isbn13),
-    "isbn10": re.compile(_re_isbn10),
-    "mac_addresses": re.compile(_re_mac_address),
-    "iban_numbers": re.compile(_re_iban_number),
-    "bic_codes": re.compile(_re_bic_code),
-    # "bic_codes": re.compile(f"\\b{_re_bic_code}\\b"),
-    "git_repos": re.compile(_re_git_repo),
-}
-print(_re_iban_number)
+class Patterns:
+    def __init__(self, case_sensitive=False, check_word_boundaries=True) -> None:
+        self.case_sensitive = case_sensitive
+        self.check_word_boundaries = check_word_boundaries
+        self.regex_map = {
+            "dates": self.compile(_re_date),
+            "times": self.compile(_re_time),
+            "phones": self.compile(_re_phone),
+            "phones_with_exts": self.compile(_re_phones_with_exts),
+            "emails": self.compile(_re_email),
+            "links": self.compile(_re_link),
+            "ipv4": self.compile(_re_ipv4),
+            "ipv6": self.compile(_re_ipv6),
+            "ips": self.compile(_re_ip_pattern),
+            "not_known_ports": self.compile(_re_not_known_ports),
+            "prices": self.compile(_re_price),
+            "hex_colors": self.compile(_re_hex_color),
+            "credit_cards": self.compile(_re_credit_card),
+            "visa_cards": self.compile(_re_visa_card),
+            "master_cards": self.compile(_re_master_card),
+            "btc_addresses": self.compile(_re_btc_address),
+            "street_addresses": self.compile(_re_street_address),
+            "zip_codes": self.compile(_re_zip_code),
+            "po_boxes": self.compile(_re_po_box),
+            "ssn_number": self.compile(_re_ssn),
+            "md5_hashes": self.compile(_re_md5_hashes),
+            "sha1_hashes": self.compile(_re_sha1_hashes),
+            "sha256_hashes": self.compile(_re_sha256_hashes),
+            "isbn13": self.compile(_re_isbn13),
+            "isbn10": self.compile(_re_isbn10),
+            "mac_addresses": self.compile(_re_mac_address),
+            "iban_numbers": self.compile(_re_iban_number),
+            "bic_codes": self.compile(_re_bic_code),
+            "git_repos": self.compile(_re_git_repo),
+        }
 
+    def compile(self, re_pattern: str):
+        if self.check_word_boundaries:
+            re_pattern = re_pattern
+        if self.case_sensitive:
+            return re.compile(re_pattern)
+        else:
+            return re.compile(re_pattern, flags=re.IGNORECASE)
 
-def _match(text: str, regex: re.Pattern) -> list:
-    """Function to match using regex findall function
-    Args:
-        textchunk (str) : textchunk to be supplied to identify pattern
-        regex (str) : regex to be used to match
-    Returns:
-        list (list): list of sensitive data found in lines
-    """
-    parsed = list(regex.findall(text))
-    return parsed
+    def match(self, text: str, regex: re.Pattern) -> list:
+        """Function to match using regex findall function
+        Args:
+            textchunk (str) : textchunk to be supplied to identify pattern
+            regex (str) : regex to be used to match
+        Returns:
+            list (list): list of sensitive data found in lines
+        """
+        parsed = list(regex.findall(text))
+        return parsed
 
+    def match_by_regex_search(self, text: str, regex: re.Pattern) -> list:
+        """Function to match using regex search function
+        Args:
+            textchunk (str) : textchunk to be supplied to identify pattern
+            regex (str) : regex to be used to match
+        Returns:
+            list (list): list of sensitive data found in lines
+        """
+        parsed = []
+        for line in text.split():
+            if regex.search(line):
+                pattern_string = re.search(regex, line)
+                sensitive_string = pattern_string.group(0)
+                parsed.append(sensitive_string)
+        return parsed
 
-def _match_by_regex_search(text: str, regex: re.Pattern) -> list:
-    """Function to match using regex search function
-    Args:
-        textchunk (str) : textchunk to be supplied to identify pattern
-        regex (str) : regex to be used to match
-    Returns:
-        list (list): list of sensitive data found in lines
-    """
-    parsed = []
-    for line in text.split():
-        if regex.search(line):
-            pattern_string = re.search(regex, line)
-            sensitive_string = pattern_string.group(0)
-            parsed.append(sensitive_string)
-    return parsed
+    def dates(self, text: str) -> list:
+        return self.match(text, self.regex_map["dates"])
 
+    def times(self, text: str) -> list:
+        return self.match(text, self.regex_map["times"])
 
-def dates(text: str) -> list:
-    return _match(text, _regex_map["dates"])
+    def phones(self, text: str) -> list:
+        return self.match(text, self.regex_map["phones"])
 
+    def phones_with_exts(self, text: str) -> list:
+        return self.match(text, self.regex_map["phones_with_exts"])
 
-def times(text: str) -> list:
-    return _match(text, _regex_map["times"])
+    def emails(self, text: str) -> list:
+        return self.match(text, self.regex_map["emails"])
 
+    def links(self, text: str) -> list:
+        return self.match_by_regex_search(text, self.regex_map["links"])
 
-def phones(text: str) -> list:
-    return _match(text, _regex_map["phones"])
+    def ipv4s(self, text: str) -> list:
+        return self.match(text, self.regex_map["ipv4"])
 
+    def ipv6s(self, text: str) -> list:
+        return self.match(text, self.regex_map["ipv6"])
 
-def phones_with_exts(text: str) -> list:
-    return _match(text, _regex_map["phones_with_exts"])
+    def ips(self, text: str) -> list:
+        return self.match(text, self.regex_map["ips"])
 
+    def not_known_ports(self, text: str) -> list:
+        return self.match(text, self.regex_map["not_known_ports"])
 
-def emails(text: str) -> list:
-    return _match(text, _regex_map["emails"])
+    def prices(self, text: str) -> list:
+        return self.match(text, self.regex_map["prices"])
 
+    def hex_colors(self, text: str) -> list:
+        return self.match(text, self.regex_map["hex_colors"])
 
-def links(text: str) -> list:
-    return _match_by_regex_search(text, _regex_map["links"])
+    def credit_cards(self, text: str) -> list:
+        return self.match(text, self.regex_map["credit_cards"])
 
+    def visa_cards(self, text: str) -> list:
+        return self.match(text, self.regex_map["visa_cards"])
 
-def ipv4s(text: str) -> list:
-    return _match(text, _regex_map["ipv4"])
+    def master_cards(self, text: str) -> list:
+        return self.match(text, self.regex_map["master_cards"])
 
+    def btc_address(self, text: str) -> list:
+        return self.match(text, self.regex_map["btc_addresses"])
 
-def ipv6s(text: str) -> list:
-    return _match(text, _regex_map["ipv6"])
+    def street_addresses(self, text: str) -> list:
+        return self.match(text, self.regex_map["street_addresses"])
 
+    def zip_codes(self, text: str) -> list:
+        return self.match(text, self.regex_map["zip_codes"])
 
-def ips(text: str) -> list:
-    return _match(text, _regex_map["ips"])
+    def po_boxes(self, text: str) -> list:
+        return self.match(text, self.regex_map["po_boxes"])
 
+    def ssn_numbers(self, text: str) -> list:
+        return self.match(text, self.regex_map["ssn_number"])
 
-def not_known_ports(text: str) -> list:
-    return _match(text, _regex_map["not_known_ports"])
+    def md5_hashes(self, text: str) -> list:
+        return self.match(text, self.regex_map["md5_hashes"])
 
+    def sha1_hashes(self, text: str) -> list:
+        return self.match(text, self.regex_map["sha1_hashes"])
 
-def prices(text: str) -> list:
-    return _match(text, _regex_map["prices"])
+    def sha256_hashes(self, text: str) -> list:
+        return self.match(text, self.regex_map["sha256_hashes"])
 
+    def isbn13s(self, text: str) -> list:
+        return self.match(text, self.regex_map["isbn13"])
 
-def hex_colors(text: str) -> list:
-    return _match(text, _regex_map["hex_colors"])
+    def isbn10s(self, text: str) -> list:
+        return self.match(text, self.regex_map["isbn10"])
 
+    def mac_addresses(self, text: str) -> list:
+        return self.match_by_regex_search(text, self.regex_map["mac_addresses"])
 
-def credit_cards(text: str) -> list:
-    return _match(text, _regex_map["credit_cards"])
+    def iban_numbers(self, text: str) -> list:
+        return self.match(text, self.regex_map["iban_numbers"])
 
+    def bic_codes(self, text: str) -> list:
+        return self.match(text, self.regex_map["bic_codes"])
 
-def visa_cards(text: str) -> list:
-    return _match(text, _regex_map["visa_cards"])
-
-
-def master_cards(text: str) -> list:
-    return _match(text, _regex_map["master_cards"])
-
-
-def btc_address(text: str) -> list:
-    return _match(text, _regex_map["btc_addresses"])
-
-
-def street_addresses(text: str) -> list:
-    return _match(text, _regex_map["street_addresses"])
-
-
-def zip_codes(text: str) -> list:
-    return _match(text, _regex_map["zip_codes"])
-
-
-def po_boxes(text: str) -> list:
-    return _match(text, _regex_map["po_boxes"])
-
-
-def ssn_numbers(text: str) -> list:
-    return _match(text, _regex_map["ssn_number"])
-
-
-def md5_hashes(text: str) -> list:
-    return _match(text, _regex_map["md5_hashes"])
-
-
-def sha1_hashes(text: str) -> list:
-    return _match(text, _regex_map["sha1_hashes"])
-
-
-def sha256_hashes(text: str) -> list:
-    return _match(text, _regex_map["sha256_hashes"])
-
-
-def isbn13s(text: str) -> list:
-    return _match(text, _regex_map["isbn13"])
-
-
-def isbn10s(text: str) -> list:
-    return _match(text, _regex_map["isbn10"])
-
-
-def mac_addresses(text: str) -> list:
-    return _match_by_regex_search(text, _regex_map["mac_addresses"])
-
-
-def iban_numbers(text: str) -> list:
-    return _match(text, _regex_map["iban_numbers"])
-
-
-def bic_codes(text: str) -> list:
-    return _match(text, _regex_map["bic_codes"])
-
-
-def git_repos(text: str) -> list:
-    return _match_by_regex_search(text, _regex_map["git_repos"])
+    def git_repos(self, text: str) -> list:
+        return self.match_by_regex_search(text, self.regex_map["git_repos"])

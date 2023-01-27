@@ -1,7 +1,9 @@
-import repatterns
+from repatterns import Patterns
+
+repatterns = Patterns()
 
 
-def test_cregex_dates():
+def test_dates():
     test_data = [
         "3-23-17",
         "3.23.17",
@@ -10,15 +12,21 @@ def test_cregex_dates():
         "Mar 23th 2017",
         "Mar. 23th, 2017",
         "23 Mar 2017",
+        "jan 22",
     ]
+    failing_tests = ["Trojan 22", "Vomar 19", "Jan 22ABC"]
 
     for test_string in test_data:
         assert repatterns.dates(test_string) == [test_string], (
             "Dates regex failed on: " + test_string
         )
+    for test_string in failing_tests:
+        assert len(repatterns.dates(test_string)) == 0, (
+            "This is not a date " + test_string
+        )
 
 
-def test_cregex_times():
+def test_times():
     test_data = [
         "09:45",
         "9:45",
@@ -29,13 +37,18 @@ def test_cregex_times():
         "9:00 pm",
     ]
 
+    failing_tests = ["12201am", "AC23:45"]
     for test_string in test_data:
         assert repatterns.times(test_string) == [test_string], (
             "Times regex failed on: " + test_string
         )
+    for test_string in failing_tests:
+        assert len(repatterns.times(test_string)) == 0, (
+            "This is not a time " + test_string
+        )
 
 
-def test_cregex_phones():
+def test_phones():
     test_data = [
         "12345678900",
         "1234567890",
@@ -56,7 +69,7 @@ def test_cregex_phones():
         )
 
 
-def test_cregex_phones_with_exts():
+def test_phones_with_exts():
     test_data = [
         "(523)222-8888 ext 527",
         "(523)222-8888x623",
@@ -73,7 +86,7 @@ def test_cregex_phones_with_exts():
         )
 
 
-def test_cregex_links():
+def test_links():
     test_data = [
         "http://www.google.com",
         "https://www.google.com",
@@ -108,7 +121,7 @@ def test_cregex_links():
         )
 
 
-def test_cregex_emails():
+def test_emails():
     test_data = [
         "john.smith@gmail.com",
         "john_smith@gmail.com",
@@ -130,7 +143,7 @@ def test_cregex_emails():
         )
 
 
-def test_cregex_ipv4s():
+def test_ipv4s():
     test_data = [
         "127.0.0.1",
         "192.168.1.1",
@@ -145,7 +158,7 @@ def test_cregex_ipv4s():
         )
 
 
-def test_cregex_ipv6s():
+def test_ipv6s():
     test_data = [
         "fe80:0000:0000:0000:0204:61ff:fe9d:f156",
         "fe80:0:0:0:204:61ff:fe9d:f156",
@@ -161,7 +174,7 @@ def test_cregex_ipv6s():
         )
 
 
-def test_cregex_ips():
+def test_ips():
     test_data = [
         "127.0.0.1",
         "192.168.1.1",
@@ -182,7 +195,7 @@ def test_cregex_ips():
         )
 
 
-def test_cregex_not_ports():
+def test_not_ports():
     test_data = ["1024", "2121", "8080", "12345", "55555", "65535"]
 
     failing_tests = ["21", "80", "1023", "65536"]
@@ -198,7 +211,7 @@ def test_cregex_not_ports():
         )
 
 
-def test_cregex_prices():
+def test_prices():
     test_data = ["$1.23", "$1", "$1,000", "$10,000.00"]
 
     failing_tests = ["$1,10,0", "$100.000"]
@@ -214,7 +227,7 @@ def test_cregex_prices():
         )
 
 
-def test_cregex_hex_colors():
+def test_hex_colors():
     test_data = [
         "#000000",
         "#FFFFFF",
@@ -241,7 +254,7 @@ def test_cregex_hex_colors():
         )
 
 
-def test_cregex_credit_cards():
+def test_credit_cards():
     test_data = [
         "0000-0000-0000-0000",
         "0123456789012345",
@@ -255,7 +268,7 @@ def test_cregex_credit_cards():
         )
 
 
-def test_cregex_visa_cards():
+def test_visa_cards():
     test_data = ["4111 1111 1111 1111", "4222 2222 2222 2222"]
 
     failing_tests = ["5500 0000 0000 0004", "3400 0000 0000 009", "3000 0000 0000 04"]
@@ -271,7 +284,7 @@ def test_cregex_visa_cards():
         )
 
 
-def test_cregex_master_cards():
+def test_master_cards():
     test_data = ["5500 0000 0000 0004", "5500 3334 0000 1234"]
 
     failing_tests = [
@@ -292,7 +305,7 @@ def test_cregex_master_cards():
         )
 
 
-def test_cregex_btc_address():
+def test_btc_address():
     test_data = [
         "1LgqButDNV2rVHe9DATt6WqD8tKZEKvaK2",
         "19P6EYhu6kZzRy9Au4wRRZVE8RemrxPbZP",
@@ -318,7 +331,7 @@ def test_cregex_btc_address():
         )
 
 
-def test_cregex_street_addresses():
+def test_street_addresses():
     test_data = [
         "101 main st.",
         "504 parkwood drive",
@@ -339,7 +352,7 @@ def test_cregex_street_addresses():
         )
 
 
-def test_cregex_zip_codes():
+def test_zip_codes():
     test_data = ["02540", "02540-4119"]
 
     failing_tests = [
@@ -359,7 +372,7 @@ def test_cregex_zip_codes():
         )
 
 
-def test_cregex_po_boxes():
+def test_po_boxes():
     test_data = ["PO Box 123456", "p.o. box 234234"]
 
     failing_tests = ["PO Box 1234-5678-9012-3456-7890-1234"]
@@ -375,7 +388,7 @@ def test_cregex_po_boxes():
         )
 
 
-def test_cregex_ssns():
+def test_ssns():
     test_data = ["000-00-0000", "111-11-1111", "222-22-2222", "123-45-6789"]
 
     failing_tests = [
@@ -396,7 +409,7 @@ def test_cregex_ssns():
         )
 
 
-def test_cregex_md5_hashes():
+def test_md5_hashes():
     test_data = [
         "b5ab01fad5a008d436f76aafc896f9c6",
         "00000000000000000000000000000000",
@@ -425,7 +438,7 @@ def test_cregex_md5_hashes():
         )
 
 
-def test_cregex_sha1_hashes():
+def test_sha1_hashes():
     test_data = [
         "da39a3ee5e6b4b0d3255bfef95601890afd80709",
         "0000000000000000000000000000000000000000",
@@ -457,7 +470,7 @@ def test_cregex_sha1_hashes():
         )
 
 
-def test_cregex_sha256_hashes():
+def test_sha256_hashes():
     test_data = [
         "3f4146a1d0b5dac26562ff7dc6248573f4e996cf764a0f517318ff398dcfa792",
         "0000000000000000000000000000000000000000000000000000000000000000",
@@ -482,7 +495,7 @@ def test_cregex_sha256_hashes():
         )
 
 
-def test_cregex_isbn13s():
+def test_isbn13s():
     test_data = ["978-3-16-148410-0", "978-1-56619-909-4", "133-1-12144-909-9"]
 
     failing_tests = ["1-56619-909-3", "1-33342-100-1", "2-33342-362-9"]
@@ -498,7 +511,7 @@ def test_cregex_isbn13s():
         )
 
 
-def test_cregex_isbn10s():
+def test_isbn10s():
     test_data = ["3-16-148410-0", "1-56619-909-4", "1-33342-100-1"]
 
     failing_tests = ["978-3-16-148410-0", "978-1-56619-909-4", "133-1-12144-909-9"]
@@ -514,7 +527,7 @@ def test_cregex_isbn10s():
         )
 
 
-def test_cregex_mac_addresses():
+def test_mac_addresses():
     test_data = ["f8:2f:a4:fe:76:d2", "F8:2F:A4:FE:76:D2", "3D-F2-C9-A6-B3-4F"]
 
     failing_tests = ["3D:F2:C9:A6:B3:4G", "f0:2f:P4:Be:96:J5"]
@@ -587,7 +600,7 @@ def test_bic_codes():
         )
 
 
-def test_cregex_git_repos():
+def test_git_repos():
     test_data = [
         "https://github.com/brootware/commonregex-improved.git",
         "git@github.com:brootware/commonregex-improved.git",
