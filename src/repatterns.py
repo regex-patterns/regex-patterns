@@ -206,7 +206,7 @@ _re_iban_by_country = (
     r"VG[a-zA-Z0-9]{2}[\s-]?(?:[a-zA-Z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
 )
 _re_iban_number = "|".join(f"(?:{pattern})" for pattern in _re_iban_by_country)
-_re_bic_swift = r"(?<bank_code>[a-z|A-Z]{4})(?<code_pays>[a-z|A-Z]{4})\d{2}(\d{3})?"
+_re_bic_code = r"(?:[a-zA-Z]{4})(?:[a-zA-Z]{2})(?:[a-zA-Z0-9]{2})(?:[a-zA-Z0-9]{3})?"
 _re_git_repo = (
     r"((git|ssh|http(s)?)|(git@[\w\.]+))(:(\/\/)?)([\w\.@\:/\-~]+)(\.git)(\/)?"
 )
@@ -240,8 +240,11 @@ _regex_map = {
     "isbn10": re.compile(_re_isbn10),
     "mac_addresses": re.compile(_re_mac_address),
     "iban_numbers": re.compile(_re_iban_number),
+    "bic_codes": re.compile(_re_bic_code),
+    # "bic_codes": re.compile(f"\\b{_re_bic_code}\\b"),
     "git_repos": re.compile(_re_git_repo),
 }
+print(_re_iban_number)
 
 
 def _match(text: str, regex: re.Pattern) -> list:
@@ -379,6 +382,10 @@ def mac_addresses(text: str) -> list:
 
 def iban_numbers(text: str) -> list:
     return _match(text, _regex_map["iban_numbers"])
+
+
+def bic_codes(text: str) -> list:
+    return _match(text, _regex_map["bic_codes"])
 
 
 def git_repos(text: str) -> list:

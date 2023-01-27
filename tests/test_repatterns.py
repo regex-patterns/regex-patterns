@@ -532,36 +532,58 @@ def test_cregex_mac_addresses():
 
 def test_iban_numbers():
     test_data = [
-        "BE71096123456769",
-        "FR7630006000011234567890189",
-        "DE91100000000123456789",
-        "GR9608100010000001234567890",
+        "be71096123456769",
+        "fr7630006000011234567890189",
+        "de91100000000123456789",
+        "gr9608100010000001234567890",
         "RO09BCYP0000001234567890",
-        "SA4420000001234567891234",
-        "ES7921000813610123456789",
+        "sa4420000001234567891234",
+        "es7921000813610123456789",
         "CH5604835012345678009",
-        "GB98MIDL07009312345678",
-        "DE89 3704 0044 0532 0130 00",
+        "gb98midl07009312345678",
+        "de89 3704 0044 0532 0130 00",
         "AT61 1904 3002 3457 3201",
-        "FR76 3000 6000 0112 3456 7890 189",
-        "GB82-WEST-1234-5698-7654-32",
-        "NL20INGB0001234567",
-        "NL02-ABNA-0123-4567-89",
+        "fr76 3000 6000 0112 3456 7890 189",
+        "gb82-west-1234-5698-7654-32",
+        "nl20ingb0001234567",
+        "nl02-abna-0123-4567-89",
     ]
     failing_tests = [
         "droid@i.ban",
-        "XX02-ABNA-0123-4567-89",
-        "YY4420000001234567891234",
-        "DE 89370400440532013000",
+        "xx02-abna-0123-4567-89",
+        "yy4420000001234567891234",
+        "de 89370400440532013000",
+        "BNLIITRRXXX",
     ]
     for test_string in test_data:
         assert repatterns.iban_numbers(test_string) == [test_string], (
             "IBAN regex failed on: " + test_string
         )
-
     for test_string in failing_tests:
         assert repatterns.iban_numbers(test_string) != [test_string], (
-            "This is not an IBAN " + test_string
+            "this is not an iban " + test_string
+        )
+
+
+def test_bic_codes():
+    test_data = [
+        "BRASBRRJXXX",
+        "ingbau2sxxx",
+        "BNLIITRRXXX",
+        "gebanlkaxxx",
+    ]
+    failing_tests = [
+        "sa4420000001234567891234",
+        "RO09BCYP0000001234567890",
+    ]
+    for test_string in test_data:
+        assert repatterns.bic_codes(test_string) == [test_string], (
+            "BIC regex failed on: " + test_string
+        )
+
+    for test_string in failing_tests:
+        assert repatterns.bic_codes(test_string) != [test_string], (
+            "This is not a BIC code " + test_string
         )
 
 
