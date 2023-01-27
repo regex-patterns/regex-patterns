@@ -1,4 +1,4 @@
-import crim as cregex
+import repatterns
 
 
 def test_cregex_dates():
@@ -13,7 +13,7 @@ def test_cregex_dates():
     ]
 
     for test_string in test_data:
-        assert cregex.dates(test_string) == [test_string], (
+        assert repatterns.dates(test_string) == [test_string], (
             "Dates regex failed on: " + test_string
         )
 
@@ -30,7 +30,7 @@ def test_cregex_times():
     ]
 
     for test_string in test_data:
-        assert cregex.times(test_string) == [test_string], (
+        assert repatterns.times(test_string) == [test_string], (
             "Times regex failed on: " + test_string
         )
 
@@ -51,7 +51,7 @@ def test_cregex_phones():
     ]
 
     for test_string in test_data:
-        assert cregex.phones(test_string) == [test_string], (
+        assert repatterns.phones(test_string) == [test_string], (
             "Phones regex failed on: " + test_string
         )
 
@@ -68,7 +68,7 @@ def test_cregex_phones_with_exts():
     ]
 
     for test_string in test_data:
-        assert cregex.phones_with_exts(test_string) == [test_string], (
+        assert repatterns.phones_with_exts(test_string) == [test_string], (
             "Phones with exts regex failed on: " + test_string
         )
 
@@ -103,7 +103,7 @@ def test_cregex_links():
     ]
 
     for test_string in test_data:
-        assert cregex.links(test_string) == [test_string], (
+        assert repatterns.links(test_string) == [test_string], (
             "Links regex failed on: " + test_string
         )
 
@@ -120,12 +120,12 @@ def test_cregex_emails():
     failing_tests = ["john.smith@gmail..com"]
 
     for test_string in test_data:
-        assert cregex.emails(test_string) == [test_string], (
+        assert repatterns.emails(test_string) == [test_string], (
             "Emails regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.emails(test_string) != [test_string], (
+        assert repatterns.emails(test_string) != [test_string], (
             "These should not be matched " + test_string
         )
 
@@ -140,7 +140,7 @@ def test_cregex_ipv4s():
     ]
 
     for test_string in test_data:
-        assert cregex.ipv4s(test_string) == [test_string], (
+        assert repatterns.ipv4s(test_string) == [test_string], (
             "IPv4s regex failed on: " + test_string
         )
 
@@ -156,7 +156,7 @@ def test_cregex_ipv6s():
     ]
 
     for test_string in test_data:
-        assert cregex.ipv6s(test_string) == [test_string], (
+        assert repatterns.ipv6s(test_string) == [test_string], (
             "IPv6s regex failed on: " + test_string
         )
 
@@ -177,7 +177,7 @@ def test_cregex_ips():
     ]
 
     for test_string in test_data:
-        assert cregex.ips(test_string) == [test_string], (
+        assert repatterns.ips(test_string) == [test_string], (
             "IPs regex failed on: " + test_string
         )
 
@@ -188,12 +188,12 @@ def test_cregex_not_ports():
     failing_tests = ["21", "80", "1023", "65536"]
 
     for test_string in test_data:
-        assert cregex.not_known_ports(test_string) == [test_string], (
+        assert repatterns.not_known_ports(test_string) == [test_string], (
             "Not ports regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.not_known_ports(test_string) != [test_string], (
+        assert repatterns.not_known_ports(test_string) != [test_string], (
             "This is a well known port " + test_string
         )
 
@@ -204,12 +204,12 @@ def test_cregex_prices():
     failing_tests = ["$1,10,0", "$100.000"]
 
     for test_string in test_data:
-        assert cregex.prices(test_string) == [test_string], (
+        assert repatterns.prices(test_string) == [test_string], (
             "Prices regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.prices(test_string) != [test_string], (
+        assert repatterns.prices(test_string) != [test_string], (
             "This is not a price " + test_string
         )
 
@@ -231,12 +231,12 @@ def test_cregex_hex_colors():
     failing_tests = ["#000000FFF", "#FFFFFFFFF"]
 
     for test_string in test_data:
-        assert cregex.hex_colors(test_string) == [test_string], (
+        assert repatterns.hex_colors(test_string) == [test_string], (
             "Hex colors regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.hex_colors(test_string) != [test_string], (
+        assert repatterns.hex_colors(test_string) != [test_string], (
             "This is not a hex color " + test_string
         )
 
@@ -250,7 +250,7 @@ def test_cregex_credit_cards():
     ]
 
     for test_string in test_data:
-        assert cregex.credit_cards(test_string) == [test_string], (
+        assert repatterns.credit_cards(test_string) == [test_string], (
             "Credit cards regex failed on: " + test_string
         )
 
@@ -261,12 +261,12 @@ def test_cregex_visa_cards():
     failing_tests = ["5500 0000 0000 0004", "3400 0000 0000 009", "3000 0000 0000 04"]
 
     for test_string in test_data:
-        assert cregex.visa_cards(test_string) == [test_string], (
+        assert repatterns.visa_cards(test_string) == [test_string], (
             "Visa cards regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.visa_cards(test_string) != [test_string], (
+        assert repatterns.visa_cards(test_string) != [test_string], (
             "This is not a visa card " + test_string
         )
 
@@ -282,12 +282,12 @@ def test_cregex_master_cards():
     ]
 
     for test_string in test_data:
-        assert cregex.master_cards(test_string) == [test_string], (
+        assert repatterns.master_cards(test_string) == [test_string], (
             "Master cards regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.master_cards(test_string) != [test_string], (
+        assert repatterns.master_cards(test_string) != [test_string], (
             "This is not a master card " + test_string
         )
 
@@ -308,12 +308,12 @@ def test_cregex_btc_address():
     ]
 
     for test_string in test_data:
-        assert cregex.btc_address(test_string) == [test_string], (
+        assert repatterns.btc_address(test_string) == [test_string], (
             "BTC address regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.btc_address(test_string) != [test_string], (
+        assert repatterns.btc_address(test_string) != [test_string], (
             "This is not a BTC address " + test_string
         )
 
@@ -329,12 +329,12 @@ def test_cregex_street_addresses():
     failing_tests = ["101 main straight"]
 
     for test_string in test_data:
-        assert cregex.street_addresses(test_string) == [test_string], (
+        assert repatterns.street_addresses(test_string) == [test_string], (
             "Street addresses regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.street_addresses(test_string) != [test_string], (
+        assert repatterns.street_addresses(test_string) != [test_string], (
             "This is not a street address " + test_string
         )
 
@@ -349,12 +349,12 @@ def test_cregex_zip_codes():
     ]
 
     for test_string in test_data:
-        assert cregex.zip_codes(test_string) == [test_string], (
+        assert repatterns.zip_codes(test_string) == [test_string], (
             "Zip codes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.zip_codes(test_string) != [test_string], (
+        assert repatterns.zip_codes(test_string) != [test_string], (
             "This is not a zip code " + test_string
         )
 
@@ -365,12 +365,12 @@ def test_cregex_po_boxes():
     failing_tests = ["PO Box 1234-5678-9012-3456-7890-1234"]
 
     for test_string in test_data:
-        assert cregex.po_boxes(test_string) == [test_string], (
+        assert repatterns.po_boxes(test_string) == [test_string], (
             "PO boxes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.po_boxes(test_string) != [test_string], (
+        assert repatterns.po_boxes(test_string) != [test_string], (
             "This is not a PO box " + test_string
         )
 
@@ -386,12 +386,12 @@ def test_cregex_ssns():
     ]
 
     for test_string in test_data:
-        assert cregex.ssn_numbers(test_string) == [test_string], (
+        assert repatterns.ssn_numbers(test_string) == [test_string], (
             "SSNs regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.ssn_numbers(test_string) != [test_string], (
+        assert repatterns.ssn_numbers(test_string) != [test_string], (
             "This is not an SSN " + test_string
         )
 
@@ -415,12 +415,12 @@ def test_cregex_md5_hashes():
     ]
 
     for test_string in test_data:
-        assert cregex.md5_hashes(test_string) == [test_string], (
+        assert repatterns.md5_hashes(test_string) == [test_string], (
             "MD5 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.md5_hashes(test_string) != [test_string], (
+        assert repatterns.md5_hashes(test_string) != [test_string], (
             "This is not an MD5 hash " + test_string
         )
 
@@ -447,12 +447,12 @@ def test_cregex_sha1_hashes():
     ]
 
     for test_string in test_data:
-        assert cregex.sha1_hashes(test_string) == [test_string], (
+        assert repatterns.sha1_hashes(test_string) == [test_string], (
             "SHA1 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.sha1_hashes(test_string) != [test_string], (
+        assert repatterns.sha1_hashes(test_string) != [test_string], (
             "This is not an SHA1 hash " + test_string
         )
 
@@ -472,12 +472,12 @@ def test_cregex_sha256_hashes():
     ]
 
     for test_string in test_data:
-        assert cregex.sha256_hashes(test_string) == [test_string], (
+        assert repatterns.sha256_hashes(test_string) == [test_string], (
             "SHA256 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.sha256_hashes(test_string) != [test_string], (
+        assert repatterns.sha256_hashes(test_string) != [test_string], (
             "This is not an SHA256 hash " + test_string
         )
 
@@ -488,12 +488,12 @@ def test_cregex_isbn13s():
     failing_tests = ["1-56619-909-3", "1-33342-100-1", "2-33342-362-9"]
 
     for test_string in test_data:
-        assert cregex.isbn13s(test_string) == [test_string], (
+        assert repatterns.isbn13s(test_string) == [test_string], (
             "ISBN13s regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.isbn13s(test_string) != [test_string], (
+        assert repatterns.isbn13s(test_string) != [test_string], (
             "This is not an ISBN13 " + test_string
         )
 
@@ -504,12 +504,12 @@ def test_cregex_isbn10s():
     failing_tests = ["978-3-16-148410-0", "978-1-56619-909-4", "133-1-12144-909-9"]
 
     for test_string in test_data:
-        assert cregex.isbn10s(test_string) == [test_string], (
+        assert repatterns.isbn10s(test_string) == [test_string], (
             "ISBN10s regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.isbn10s(test_string) != [test_string], (
+        assert repatterns.isbn10s(test_string) != [test_string], (
             "This is not an ISBN10 " + test_string
         )
 
@@ -520,13 +520,48 @@ def test_cregex_mac_addresses():
     failing_tests = ["3D:F2:C9:A6:B3:4G", "f0:2f:P4:Be:96:J5"]
 
     for test_string in test_data:
-        assert cregex.mac_addresses(test_string) == [test_string], (
+        assert repatterns.mac_addresses(test_string) == [test_string], (
             "MAC addresses regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.mac_addresses(test_string) != [test_string], (
+        assert repatterns.mac_addresses(test_string) != [test_string], (
             "This is not an MAC address " + test_string
+        )
+
+
+def test_iban_numbers():
+    test_data = [
+        "BE71096123456769",
+        "FR7630006000011234567890189",
+        "DE91100000000123456789",
+        "GR9608100010000001234567890",
+        "RO09BCYP0000001234567890",
+        "SA4420000001234567891234",
+        "ES7921000813610123456789",
+        "CH5604835012345678009",
+        "GB98MIDL07009312345678",
+        "DE89 3704 0044 0532 0130 00",
+        "AT61 1904 3002 3457 3201",
+        "FR76 3000 6000 0112 3456 7890 189",
+        "GB82-WEST-1234-5698-7654-32",
+        "NL20INGB0001234567",
+        "NL02-ABNA-0123-4567-89",
+    ]
+    failing_tests = [
+        "droid@i.ban",
+        "XX02-ABNA-0123-4567-89",
+        "YY4420000001234567891234",
+        "DE 89370400440532013000",
+    ]
+    for test_string in test_data:
+        assert repatterns.iban_numbers(test_string) == [test_string], (
+            "IBAN regex failed on: " + test_string
+        )
+
+    for test_string in failing_tests:
+        assert repatterns.iban_numbers(test_string) != [test_string], (
+            "This is not an IBAN " + test_string
         )
 
 
@@ -542,11 +577,11 @@ def test_cregex_git_repos():
     ]
 
     for test_string in test_data:
-        assert cregex.git_repos(test_string) == [test_string], (
+        assert repatterns.git_repos(test_string) == [test_string], (
             "Git repos regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert cregex.git_repos(test_string) != [test_string], (
+        assert repatterns.git_repos(test_string) != [test_string], (
             "This is not a Git repo " + test_string
         )

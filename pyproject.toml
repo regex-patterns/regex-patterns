@@ -2,14 +2,20 @@
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[project]
+name = "regex-patterns"
+
 [tool.poetry]
-name = "commonregex-improved"
+name = "repatterns"
 version = "1.0.2"
-description = "An improved version of original commonregex. Find all dates, times, emails, phone numbers, links, emails, ip addresses, prices, bitcoin address, and more in a string."
-authors = ["brootware <brootware@outlook.com>"]
+description = """
+An improved version of original commonregex. Find all dates, times, emails, phone \
+numbers, links, emails, ip addresses, prices, bitcoin address, and more in a string. \
+"""
+authors = ["Luiz Otavio V. B. Oliveira <luiz.vbo@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/brootware/commonregex-improved"
+repository = "https://github.com/regex-patterns/regex-patterns"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
@@ -23,9 +29,9 @@ classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: Developers",
 ]
-packages = [
-  { include = "crim.py" },
-]
+# packages = [
+#   { include = "src/repatterns/*" },
+# ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -54,12 +60,12 @@ pytest-cov = "^3.0.0"
 [tool.pytest.ini_options]
 minversion = "2.0"
 addopts = "-rfEX -p pytester --strict-markers"
-python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
+python_files = ["tests/test_*.py"]
 python_classes = ["Test", "Acceptance"]
 python_functions = ["test"]
 
 [tool.mypy]
-mypy_path = "commonregex-improved"
+mypy_path = "regex-patterns/src"
 check_untyped_defs = true
 disallow_any_generics = true
 ignore_missing_imports = true
