@@ -29,7 +29,7 @@ This is a collection of commonly used regular expressions. This library provides
 pip install --upgrade regex-patterns
 ```
 
-## Usage
+## Usage 
 
 ```python
 from repatterns import Patterns
