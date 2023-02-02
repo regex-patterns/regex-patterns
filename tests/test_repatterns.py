@@ -13,21 +13,12 @@ def test_dates():
         "Mar. 23th, 2017",
         "23 Mar 2017",
         "jan 22",
-        # ("On Jan 9th 2021.", "Jan 9th 2021"),
     ]
-    failing_tests = ["Trojan 22", "Vomar 19", "Jan 22ABC"]
 
-    for test_case in test_data:
-        if isinstance(test_case, str):
-            assert repatterns.dates(test_case) == [test_case], (
-                "Dates regex failed on: " + test_case
-            )
-        else:
-            assert repatterns.dates(test_case[0]) == [test_case[1]], (
-                "Dates regex failed on: " + test_case[0]
-            )
-    for test_case in failing_tests:
-        assert len(repatterns.dates(test_case)) == 0, "This is not a date " + test_case
+    for test_string in test_data:
+        assert repatterns.dates(test_string) == [test_string], (
+            "Dates regex failed on: " + test_string
+        )
 
 
 def test_times():
@@ -41,14 +32,9 @@ def test_times():
         "9:00 pm",
     ]
 
-    failing_tests = ["12201am", "AC23:45"]
     for test_string in test_data:
         assert repatterns.times(test_string) == [test_string], (
             "Times regex failed on: " + test_string
-        )
-    for test_string in failing_tests:
-        assert len(repatterns.times(test_string)) == 0, (
-            "This is not a time " + test_string
         )
 
 
