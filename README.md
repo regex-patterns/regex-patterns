@@ -34,23 +34,31 @@ pip install --upgrade regex-patterns
 ```python
 from repatterns import Patterns
 
-repatterns = Patterns()
+patterns = Patterns()
 
-text = "John, please get that article on www.linkedin.com to me by 5:00PM on Jan 9th 2012. 4:00 would be ideal, actually or 5:30 P.M. If you have any questions, You can reach me at (519)-236-2723x341 or get in touch with my associate at harold_smith@gmail.com. You can find my ip address at 127.0.0.1 or at 64.248.67.225. I also have a secret protected with md5 8a2292371ee60f8212096c06fe3335fd. The internal webpage to get the article from is https://internal.sharepoint.edu.au"
+text = (
+    "John, please get that article on www.linkedin.com to me by 5:00PM on Jan 9th 2012. "
+    "4:00 would be ideal, actually or 5:30 P.M. If you have any questions, You can "
+    "reach me at (519)-236-2723x341 or get in touch with my associate at "
+    "harold_smith@gmail.com. You can find my ip address at 127.0.0.1 or at "
+    "64.248.67.225. I also have a secret protected with md5 "
+    "8a2292371ee60f8212096c06fe3335fd. The internal webpage to get the article from is "
+    "https://internal.sharepoint.edu.au"
+)
 
-date_list = repatterns.dates(text)
-# ['jan 9th 2012']
-time_list = repatterns.times(text)
-# ['5:00pm', '4:00 ', '5:30 p.m.']
-url_list = repatterns.links(text)
+date_list = patterns.dates(text)
+# ['Jan 9th 2012']
+time_list = patterns.times(text)
+# ['5:00pm', '4:00 ', '5:30 P.M.']
+url_list = patterns.links(text)
 # ['www.linkedin.com', 'gmail.com', 'https://internal.sharepoint.edu.au']
-phone_list = repatterns.phones_with_exts(text)  
+phone_list = patterns.phones_with_exts(text)  
 # ['(519)-236-2723x341']
-ip_list = repatterns.ips(text)
+ip_list = patterns.ips(text)
 # ['127.0.0.1', '64.248.67.225']
-email_list = repatterns.emails(text)
+email_list = patterns.emails(text)
 # ['harold_smith@gmail.com']
-md5_list = repatterns.md5_hashes(text)
+md5_list = patterns.md5_hashes(text)
 # ['8a2292371ee60f8212096c06fe3335fd']
 ```
 
