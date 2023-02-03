@@ -7,9 +7,9 @@ name = "regex-patterns"
 
 [tool.poetry]
 name = "repatterns"
-version = "1.0.2"
+version = "1.0.0"
 description = """
-An improved version of original commonregex. Find all dates, times, emails, phone \
+An extended version of the original commonregex-improved. Find all dates, times, emails, phone \
 numbers, links, emails, ip addresses, prices, bitcoin address, and more in a string. \
 """
 authors = ["Luiz Otavio V. B. Oliveira <luiz.vbo@gmail.com>"]
@@ -29,28 +29,12 @@ classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: Developers",
 ]
-# packages = [
-#   { include = "src/repatterns/*" },
-# ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-regex = "^2022.4.24"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
-regex = "^2022.4.24"
-attrs = "^21.4.0"
-click = ">=8.1.3"
-iniconfig = "^1.1.1"
-joblib = "^1.1.0"
-packaging = "^21.3"
-pluggy = "^1.0.0"
-py = "^1.11.0"
-pyparsing = "^3.0.8"
-tomli = "^2.0.1"
-tqdm = "^4.64.0"
-rich = "^12.4.0"
 mypy = "^0.961"
 flake8 = "^4.0.1"
 tox = "^3.25.0"
