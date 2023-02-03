@@ -207,7 +207,7 @@ _re_git_repo = (
 )
 
 
-class Patterns:
+class RegexPatterns:
     """Main class used to match patterns."""
 
     def __init__(self, case_sensitive=False, check_word_boundaries=False) -> None:

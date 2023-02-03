@@ -32,9 +32,9 @@ pip install --upgrade regex-patterns
 ## Usage 
 
 ```python
-from repatterns import Patterns
+from regex_patterns import RegexPatterns
 
-patterns = Patterns()
+patterns = RegexPatterns()
 
 text = (
     "John, please get that article on www.linkedin.com to me by 5:00PM on Jan 9th 2012. "
