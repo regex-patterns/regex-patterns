@@ -1,27 +1,32 @@
 import re
 
 _re_date = (
-    r"(?:\b|\s)(?:(?:[0-3]?\d(?:st|nd|rd|th)?\s+(?:of\s+)?(?:jan\.?|january|feb\.?"
-    r"|february|mar\.?|march|apr\.?|april|may|jun\.?|june|jul\.?|july|aug\.?|"
-    r"august|sep\.?|september|oct\.?|october|nov\.?|november|dec\.?|december)|"
-    r"(?:jan\.?|january|feb\.?|february|mar\.?|march|apr\.?|april|may|jun\.?|june|"
-    r"jul\.?|july|aug\.?|august|sep\.?|september|oct\.?|october|nov\.?|november|"
-    r"dec\.?|december)\s+[0-3]?\d(?:st|nd|rd|th)?)(?:\,)?\s*(?:\d{4})?|"
-    r"[0-3]?\d[-\./][0-3]?\d[-\./]\d{2,4})(?:\.|\b|\s)"
+    r"(?:[0-3]?\d(?:st|nd|rd|th)?\s+(?:of\s+)?"
+    r"(?:jan\.?|january|feb\.?|february|mar\.?|march|apr\.?|april|"
+    r"may|jun\.?|june|jul\.?|july|aug\.?|august|sep\.?|september|oct\.?|october|"
+    r"nov\.?|november|dec\.?|december)|"
+    r"(?:jan\.?|january|feb\.?|february|mar\.?|march|apr\.?|april|"
+    r"may|jun\.?|june|jul\.?|july|aug\.?|august|sep\.?|september|oct\.?|october|"
+    r"nov\.?|november|dec\.?|december)"
+    r"\s+[0-3]?\d(?:st|nd|rd|th)?)(?:\,)?\s*(?:\d{4})?|"
+    r"[0-3]?\d[-\./][0-3]?\d[-\./]\d{2,4}"
 )
-_re_time = r"(?:\b|\s)(?:\d{1,2}:\d{2} ?(?:[ap]\.?m\.?)?|\d[ap]\.?m\.?)(?:\.|\b|\s)"
+
+_re_time = r"\d{1,2}:\d{2} ?(?:[ap]\.?m\.?)?|\d[ap]\.?m\.?"
 
 _re_phone = (
-    r"(?:\+|\(|\b|\s)(?:(?<![\d-])(?:\+?\d{1,3}[-.\s*]?)?(?:\(?\d{3}\)?"
-    r"[-.\s*]?)?\d{3}[-.\s*]?\d{4}(?![\d-]))|(?:(?<![\d-])(?:(?:\(\+?\d{2}\))|"
-    r"(?:\+?\d{2}))\s*\d{2}\s*\d{3}\s*\d{4}(?![\d-]))(?:\.|\b|\s)"
+    r"(?:(?<![\d-])(?:\+?\d{1,3}[-.\s*]?)?(?:\(?\d{3}\)?[-.\s*]?)?"
+    r"\d{3}[-.\s*]?\d{4}(?![\d-]))|(?:(?<![\d-])(?:(?:\(\+?\d{2}\))|"
+    r"(?:\+?\d{2}))\s*\d{2}\s*\d{3}\s*\d{4}(?![\d-]))"
 )
+
 _re_phones_with_exts = (
     r"(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*(?:[2-9]1[02-9]|[2-9][02-8]1|"
     r"[2-9][02-8][02-9])\s*\)|(?:[2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))"
     r"\s*(?:[.-]\s*)?)?(?:[2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})"
     r"\s*(?:[.-]\s*)?(?:[0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(?:\d+)?)"
 )
+
 _re_link = (
     r"((?:https?://|www\d{0,3}[.])?[a-z0-9.\-]+[.](?:(?:international)|"
     r"(?:construction)|(?:contractors)|(?:enterprises)|(?:photography)|(?:immobilien)|"
@@ -204,42 +209,60 @@ _re_git_repo = (
 
 
 class Patterns:
-    def __init__(self, case_sensitive=False, check_word_boundaries=True) -> None:
+    """Main class used to match patterns."""
+
+    def __init__(self, case_sensitive=False, check_word_boundaries=False) -> None:
+        """Initialize the class.
+
+        Args:
+            case_sensitive: When set to True, indicates that the case should be
+                considered by the regex matcher.
+            check_word_boundaries: When set to True, only considers matches where the
+                boundaries are not alpha numeric charactes.
+        """
         self.case_sensitive = case_sensitive
         self.check_word_boundaries = check_word_boundaries
         self.regex_map = {
-            "dates": self.compile(_re_date),
-            "times": self.compile(_re_time),
-            "phones": self.compile(_re_phone),
-            "phones_with_exts": self.compile(_re_phones_with_exts),
-            "emails": self.compile(_re_email),
-            "links": self.compile(_re_link),
-            "ipv4": self.compile(_re_ipv4),
-            "ipv6": self.compile(_re_ipv6),
-            "ips": self.compile(_re_ip_pattern),
-            "not_known_ports": self.compile(_re_not_known_ports),
-            "prices": self.compile(_re_price),
-            "hex_colors": self.compile(_re_hex_color),
-            "credit_cards": self.compile(_re_credit_card),
-            "visa_cards": self.compile(_re_visa_card),
-            "master_cards": self.compile(_re_master_card),
-            "btc_addresses": self.compile(_re_btc_address),
-            "street_addresses": self.compile(_re_street_address),
-            "zip_codes": self.compile(_re_zip_code),
-            "po_boxes": self.compile(_re_po_box),
-            "ssn_number": self.compile(_re_ssn),
-            "md5_hashes": self.compile(_re_md5_hashes),
-            "sha1_hashes": self.compile(_re_sha1_hashes),
-            "sha256_hashes": self.compile(_re_sha256_hashes),
-            "isbn13": self.compile(_re_isbn13),
-            "isbn10": self.compile(_re_isbn10),
-            "mac_addresses": self.compile(_re_mac_address),
-            "iban_numbers": self.compile(_re_iban_number),
-            "bic_codes": self.compile(_re_bic_code),
-            "git_repos": self.compile(_re_git_repo),
+            "dates": self._compile(_re_date),
+            "times": self._compile(_re_time),
+            "phones": self._compile(_re_phone),
+            "phones_with_exts": self._compile(_re_phones_with_exts),
+            "emails": self._compile(_re_email),
+            "links": self._compile(_re_link),
+            "ipv4": self._compile(_re_ipv4),
+            "ipv6": self._compile(_re_ipv6),
+            "ips": self._compile(_re_ip_pattern),
+            "not_known_ports": self._compile(_re_not_known_ports),
+            "prices": self._compile(_re_price),
+            "hex_colors": self._compile(_re_hex_color),
+            "credit_cards": self._compile(_re_credit_card),
+            "visa_cards": self._compile(_re_visa_card),
+            "master_cards": self._compile(_re_master_card),
+            "btc_addresses": self._compile(_re_btc_address),
+            "street_addresses": self._compile(_re_street_address),
+            "zip_codes": self._compile(_re_zip_code),
+            "po_boxes": self._compile(_re_po_box),
+            "ssn_number": self._compile(_re_ssn),
+            "md5_hashes": self._compile(_re_md5_hashes),
+            "sha1_hashes": self._compile(_re_sha1_hashes),
+            "sha256_hashes": self._compile(_re_sha256_hashes),
+            "isbn13": self._compile(_re_isbn13),
+            "isbn10": self._compile(_re_isbn10),
+            "mac_addresses": self._compile(_re_mac_address),
+            "iban_numbers": self._compile(_re_iban_number),
+            "bic_codes": self._compile(_re_bic_code),
+            "git_repos": self._compile(_re_git_repo),
         }
 
-    def compile(self, re_pattern: str):
+    def _compile(self, re_pattern: str):
+        """Internal method used to compile the regex patterns.
+
+        Args:
+            re_pattern: Regex patter passed to `re.compile`.
+
+        Returns:
+            Compiled regex.
+        """
         if self.check_word_boundaries:
             re_pattern = re_pattern
         if self.case_sensitive:
@@ -255,8 +278,15 @@ class Patterns:
         Returns:
             list (list): list of sensitive data found in lines
         """
-        parsed = list(regex.findall(text))
-        return parsed
+        if self.check_word_boundaries:
+            list_matches = []
+            for match in regex.finditer(text):
+                if match.start() == 0 or not text[match.start()].isalnum():
+                    if match.end() == len(text) or not text[match.end()].isalnum():
+                        list_matches.append(match.group())
+        else:
+            list_matches = list(regex.findall(text))
+        return list_matches
 
     def match_by_regex_search(self, text: str, regex: re.Pattern) -> list:
         """Function to match using regex search function
@@ -268,9 +298,9 @@ class Patterns:
         """
         parsed = []
         for line in text.split():
-            if regex.search(line):
-                pattern_string = re.search(regex, line)
-                sensitive_string = pattern_string.group(0)
+            match = regex.search(line)
+            if match:
+                sensitive_string = match.group(0)
                 parsed.append(sensitive_string)
         return parsed
 
