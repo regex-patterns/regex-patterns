@@ -202,7 +202,6 @@ _re_iban_by_country = (
     r"VG[a-z0-9]{2}[\s-]?(?:[a-z0-9]{4}[\s-]?){1}(?:[0-9]{4}[\s-]?){4}",
 )
 _re_iban_number = "|".join(f"(?:{pattern})" for pattern in _re_iban_by_country)
-_re_bic_code = r"(?:[a-z]{4})(?:[a-z]{2})(?:[a-z0-9]{2})(?:[a-z0-9]{3})?"
 _re_git_repo = (
     r"((git|ssh|http(s)?)|(git@[\w\.]+))(:(\/\/)?)([\w\.@\:/\-~]+)(\.git)(\/)?"
 )
@@ -250,7 +249,6 @@ class Patterns:
             "isbn10": self._compile(_re_isbn10),
             "mac_addresses": self._compile(_re_mac_address),
             "iban_numbers": self._compile(_re_iban_number),
-            "bic_codes": self._compile(_re_bic_code),
             "git_repos": self._compile(_re_git_repo),
         }
 
@@ -384,9 +382,6 @@ class Patterns:
 
     def iban_numbers(self, text: str) -> list:
         return self.match(text, self.regex_map["iban_numbers"])
-
-    def bic_codes(self, text: str) -> list:
-        return self.match(text, self.regex_map["bic_codes"])
 
     def git_repos(self, text: str) -> list:
         return self.match_by_regex_search(text, self.regex_map["git_repos"])

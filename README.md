@@ -91,5 +91,4 @@ md5_list = patterns.md5_hashes(text)
 * `isbn10s(text: str)`
 * `mac_addresses(text: str)`
 * `iban_numbers(text: str)`
-* `bic_codes(text: str)`
 * `git_repos(text: str)`
