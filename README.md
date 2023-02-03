@@ -32,9 +32,9 @@ pip install --upgrade regex-patterns
 ## Usage 
 
 ```python
-from repatterns import Patterns
+from repatterns import RegexMatcher
 
-patterns = Patterns()
+matcher = RegexMatcher()
 
 text = (
     "John, please get that article on www.linkedin.com to me by 5:00PM on Jan 9th 2012. "
@@ -46,19 +46,19 @@ text = (
     "https://internal.sharepoint.edu.au"
 )
 
-date_list = patterns.dates(text)
+date_list = matcher.dates(text)
 # ['Jan 9th 2012']
-time_list = patterns.times(text)
+time_list = matcher.times(text)
 # ['5:00pm', '4:00 ', '5:30 P.M.']
-url_list = patterns.links(text)
+url_list = matcher.links(text)
 # ['www.linkedin.com', 'gmail.com', 'https://internal.sharepoint.edu.au']
-phone_list = patterns.phones_with_exts(text)  
+phone_list = matcher.phones_with_exts(text)  
 # ['(519)-236-2723x341']
-ip_list = patterns.ips(text)
+ip_list = matcher.ips(text)
 # ['127.0.0.1', '64.248.67.225']
-email_list = patterns.emails(text)
+email_list = matcher.emails(text)
 # ['harold_smith@gmail.com']
-md5_list = patterns.md5_hashes(text)
+md5_list = matcher.md5_hashes(text)
 # ['8a2292371ee60f8212096c06fe3335fd']
 ```
 

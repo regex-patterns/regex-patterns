@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "regex-patterns"
 
 [tool.poetry]
-name = "repatterns"
+name = "regex-patterns"
 version = "1.0.0"
 description = """
 An extended version of the original commonregex-improved. Find all dates, times, emails, phone \

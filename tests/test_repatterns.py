@@ -1,6 +1,6 @@
-from repatterns import Patterns
+from repatterns import RegexMatcher
 
-repatterns = Patterns()
+matcher = RegexMatcher()
 
 
 def test_dates():
@@ -16,7 +16,7 @@ def test_dates():
     ]
 
     for test_string in test_data:
-        assert repatterns.dates(test_string) == [test_string], (
+        assert matcher.dates(test_string) == [test_string], (
             "Dates regex failed on: " + test_string
         )
 
@@ -33,7 +33,7 @@ def test_times():
     ]
 
     for test_string in test_data:
-        assert repatterns.times(test_string) == [test_string], (
+        assert matcher.times(test_string) == [test_string], (
             "Times regex failed on: " + test_string
         )
 
@@ -54,7 +54,7 @@ def test_phones():
     ]
 
     for test_string in test_data:
-        assert repatterns.phones(test_string) == [test_string], (
+        assert matcher.phones(test_string) == [test_string], (
             "Phones regex failed on: " + test_string
         )
 
@@ -71,7 +71,7 @@ def test_phones_with_exts():
     ]
 
     for test_string in test_data:
-        assert repatterns.phones_with_exts(test_string) == [test_string], (
+        assert matcher.phones_with_exts(test_string) == [test_string], (
             "Phones with exts regex failed on: " + test_string
         )
 
@@ -106,7 +106,7 @@ def test_links():
     ]
 
     for test_string in test_data:
-        assert repatterns.links(test_string) == [test_string], (
+        assert matcher.links(test_string) == [test_string], (
             "Links regex failed on: " + test_string
         )
 
@@ -123,12 +123,12 @@ def test_emails():
     failing_tests = ["john.smith@gmail..com"]
 
     for test_string in test_data:
-        assert repatterns.emails(test_string) == [test_string], (
+        assert matcher.emails(test_string) == [test_string], (
             "Emails regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.emails(test_string) != [test_string], (
+        assert matcher.emails(test_string) != [test_string], (
             "These should not be matched " + test_string
         )
 
@@ -143,7 +143,7 @@ def test_ipv4s():
     ]
 
     for test_string in test_data:
-        assert repatterns.ipv4s(test_string) == [test_string], (
+        assert matcher.ipv4s(test_string) == [test_string], (
             "IPv4s regex failed on: " + test_string
         )
 
@@ -159,7 +159,7 @@ def test_ipv6s():
     ]
 
     for test_string in test_data:
-        assert repatterns.ipv6s(test_string) == [test_string], (
+        assert matcher.ipv6s(test_string) == [test_string], (
             "IPv6s regex failed on: " + test_string
         )
 
@@ -180,7 +180,7 @@ def test_ips():
     ]
 
     for test_string in test_data:
-        assert repatterns.ips(test_string) == [test_string], (
+        assert matcher.ips(test_string) == [test_string], (
             "IPs regex failed on: " + test_string
         )
 
@@ -191,12 +191,12 @@ def test_not_ports():
     failing_tests = ["21", "80", "1023", "65536"]
 
     for test_string in test_data:
-        assert repatterns.not_known_ports(test_string) == [test_string], (
+        assert matcher.not_known_ports(test_string) == [test_string], (
             "Not ports regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.not_known_ports(test_string) != [test_string], (
+        assert matcher.not_known_ports(test_string) != [test_string], (
             "This is a well known port " + test_string
         )
 
@@ -207,12 +207,12 @@ def test_prices():
     failing_tests = ["$1,10,0", "$100.000"]
 
     for test_string in test_data:
-        assert repatterns.prices(test_string) == [test_string], (
+        assert matcher.prices(test_string) == [test_string], (
             "Prices regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.prices(test_string) != [test_string], (
+        assert matcher.prices(test_string) != [test_string], (
             "This is not a price " + test_string
         )
 
@@ -234,12 +234,12 @@ def test_hex_colors():
     failing_tests = ["#000000FFF", "#FFFFFFFFF"]
 
     for test_string in test_data:
-        assert repatterns.hex_colors(test_string) == [test_string], (
+        assert matcher.hex_colors(test_string) == [test_string], (
             "Hex colors regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.hex_colors(test_string) != [test_string], (
+        assert matcher.hex_colors(test_string) != [test_string], (
             "This is not a hex color " + test_string
         )
 
@@ -253,7 +253,7 @@ def test_credit_cards():
     ]
 
     for test_string in test_data:
-        assert repatterns.credit_cards(test_string) == [test_string], (
+        assert matcher.credit_cards(test_string) == [test_string], (
             "Credit cards regex failed on: " + test_string
         )
 
@@ -264,12 +264,12 @@ def test_visa_cards():
     failing_tests = ["5500 0000 0000 0004", "3400 0000 0000 009", "3000 0000 0000 04"]
 
     for test_string in test_data:
-        assert repatterns.visa_cards(test_string) == [test_string], (
+        assert matcher.visa_cards(test_string) == [test_string], (
             "Visa cards regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.visa_cards(test_string) != [test_string], (
+        assert matcher.visa_cards(test_string) != [test_string], (
             "This is not a visa card " + test_string
         )
 
@@ -285,12 +285,12 @@ def test_master_cards():
     ]
 
     for test_string in test_data:
-        assert repatterns.master_cards(test_string) == [test_string], (
+        assert matcher.master_cards(test_string) == [test_string], (
             "Master cards regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.master_cards(test_string) != [test_string], (
+        assert matcher.master_cards(test_string) != [test_string], (
             "This is not a master card " + test_string
         )
 
@@ -311,12 +311,12 @@ def test_btc_address():
     ]
 
     for test_string in test_data:
-        assert repatterns.btc_address(test_string) == [test_string], (
+        assert matcher.btc_address(test_string) == [test_string], (
             "BTC address regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.btc_address(test_string) != [test_string], (
+        assert matcher.btc_address(test_string) != [test_string], (
             "This is not a BTC address " + test_string
         )
 
@@ -332,12 +332,12 @@ def test_street_addresses():
     failing_tests = ["101 main straight"]
 
     for test_string in test_data:
-        assert repatterns.street_addresses(test_string) == [test_string], (
+        assert matcher.street_addresses(test_string) == [test_string], (
             "Street addresses regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.street_addresses(test_string) != [test_string], (
+        assert matcher.street_addresses(test_string) != [test_string], (
             "This is not a street address " + test_string
         )
 
@@ -352,12 +352,12 @@ def test_zip_codes():
     ]
 
     for test_string in test_data:
-        assert repatterns.zip_codes(test_string) == [test_string], (
+        assert matcher.zip_codes(test_string) == [test_string], (
             "Zip codes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.zip_codes(test_string) != [test_string], (
+        assert matcher.zip_codes(test_string) != [test_string], (
             "This is not a zip code " + test_string
         )
 
@@ -368,12 +368,12 @@ def test_po_boxes():
     failing_tests = ["PO Box 1234-5678-9012-3456-7890-1234"]
 
     for test_string in test_data:
-        assert repatterns.po_boxes(test_string) == [test_string], (
+        assert matcher.po_boxes(test_string) == [test_string], (
             "PO boxes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.po_boxes(test_string) != [test_string], (
+        assert matcher.po_boxes(test_string) != [test_string], (
             "This is not a PO box " + test_string
         )
 
@@ -389,12 +389,12 @@ def test_ssns():
     ]
 
     for test_string in test_data:
-        assert repatterns.ssn_numbers(test_string) == [test_string], (
+        assert matcher.ssn_numbers(test_string) == [test_string], (
             "SSNs regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.ssn_numbers(test_string) != [test_string], (
+        assert matcher.ssn_numbers(test_string) != [test_string], (
             "This is not an SSN " + test_string
         )
 
@@ -418,12 +418,12 @@ def test_md5_hashes():
     ]
 
     for test_string in test_data:
-        assert repatterns.md5_hashes(test_string) == [test_string], (
+        assert matcher.md5_hashes(test_string) == [test_string], (
             "MD5 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.md5_hashes(test_string) != [test_string], (
+        assert matcher.md5_hashes(test_string) != [test_string], (
             "This is not an MD5 hash " + test_string
         )
 
@@ -450,12 +450,12 @@ def test_sha1_hashes():
     ]
 
     for test_string in test_data:
-        assert repatterns.sha1_hashes(test_string) == [test_string], (
+        assert matcher.sha1_hashes(test_string) == [test_string], (
             "SHA1 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.sha1_hashes(test_string) != [test_string], (
+        assert matcher.sha1_hashes(test_string) != [test_string], (
             "This is not an SHA1 hash " + test_string
         )
 
@@ -475,12 +475,12 @@ def test_sha256_hashes():
     ]
 
     for test_string in test_data:
-        assert repatterns.sha256_hashes(test_string) == [test_string], (
+        assert matcher.sha256_hashes(test_string) == [test_string], (
             "SHA256 hashes regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.sha256_hashes(test_string) != [test_string], (
+        assert matcher.sha256_hashes(test_string) != [test_string], (
             "This is not an SHA256 hash " + test_string
         )
 
@@ -491,12 +491,12 @@ def test_isbn13s():
     failing_tests = ["1-56619-909-3", "1-33342-100-1", "2-33342-362-9"]
 
     for test_string in test_data:
-        assert repatterns.isbn13s(test_string) == [test_string], (
+        assert matcher.isbn13s(test_string) == [test_string], (
             "ISBN13s regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.isbn13s(test_string) != [test_string], (
+        assert matcher.isbn13s(test_string) != [test_string], (
             "This is not an ISBN13 " + test_string
         )
 
@@ -507,12 +507,12 @@ def test_isbn10s():
     failing_tests = ["978-3-16-148410-0", "978-1-56619-909-4", "133-1-12144-909-9"]
 
     for test_string in test_data:
-        assert repatterns.isbn10s(test_string) == [test_string], (
+        assert matcher.isbn10s(test_string) == [test_string], (
             "ISBN10s regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.isbn10s(test_string) != [test_string], (
+        assert matcher.isbn10s(test_string) != [test_string], (
             "This is not an ISBN10 " + test_string
         )
 
@@ -523,12 +523,12 @@ def test_mac_addresses():
     failing_tests = ["3D:F2:C9:A6:B3:4G", "f0:2f:P4:Be:96:J5"]
 
     for test_string in test_data:
-        assert repatterns.mac_addresses(test_string) == [test_string], (
+        assert matcher.mac_addresses(test_string) == [test_string], (
             "MAC addresses regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.mac_addresses(test_string) != [test_string], (
+        assert matcher.mac_addresses(test_string) != [test_string], (
             "This is not an MAC address " + test_string
         )
 
@@ -559,11 +559,11 @@ def test_iban_numbers():
         "BNLIITRRXXX",
     ]
     for test_string in test_data:
-        assert repatterns.iban_numbers(test_string) == [test_string], (
+        assert matcher.iban_numbers(test_string) == [test_string], (
             "IBAN regex failed on: " + test_string
         )
     for test_string in failing_tests:
-        assert repatterns.iban_numbers(test_string) != [test_string], (
+        assert matcher.iban_numbers(test_string) != [test_string], (
             "this is not an iban " + test_string
         )
 
@@ -580,11 +580,11 @@ def test_git_repos():
     ]
 
     for test_string in test_data:
-        assert repatterns.git_repos(test_string) == [test_string], (
+        assert matcher.git_repos(test_string) == [test_string], (
             "Git repos regex failed on: " + test_string
         )
 
     for test_string in failing_tests:
-        assert repatterns.git_repos(test_string) != [test_string], (
+        assert matcher.git_repos(test_string) != [test_string], (
             "This is not a Git repo " + test_string
         )
