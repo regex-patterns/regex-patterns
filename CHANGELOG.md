@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None at the moment.
 
+## [1.0.0] - 2023-02-03
+
+- Fork the repository [commonregex-improved](https://github.com/brootware/commonregex-improved).
+- Change the way the package is used.
+- Add parameters to ignore case and check word boundaries.
+- Add IBAN patterns by country.
+
+# Changelog from the repo commonregex-improved
+
 ## [1.0.2] - 2022-12-19
 
 - Optimized `match()` function thanks to <https://github.com/erezsh>'s catch.
