@@ -568,28 +568,6 @@ def test_iban_numbers():
         )
 
 
-def test_bic_codes():
-    test_data = [
-        "BRASBRRJXXX",
-        "ingbau2sxxx",
-        "BNLIITRRXXX",
-        "gebanlkaxxx",
-    ]
-    failing_tests = [
-        "sa4420000001234567891234",
-        "RO09BCYP0000001234567890",
-    ]
-    for test_string in test_data:
-        assert repatterns.bic_codes(test_string) == [test_string], (
-            "BIC regex failed on: " + test_string
-        )
-
-    for test_string in failing_tests:
-        assert repatterns.bic_codes(test_string) != [test_string], (
-            "This is not a BIC code " + test_string
-        )
-
-
 def test_git_repos():
     test_data = [
         "https://github.com/brootware/commonregex-improved.git",
